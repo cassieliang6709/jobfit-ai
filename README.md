@@ -70,6 +70,7 @@ The model can recommend and explain, but final application decisions stay with t
 
 ## Core Features
 
+- Local deterministic recommendation smoke test for validating profile-job scoring behavior.
 - Personalized job recommendation from a job/content catalog.
 - Learning-content recommendation for skill gaps.
 - Multi-stage candidate generation.
@@ -106,12 +107,25 @@ The project should report only measured metrics. Planned evaluation includes:
 
 ```text
 jobfit-ai/
-├── backend/      # FastAPI services and recommendation APIs
+├── backend/      # Recommendation primitives and future FastAPI services
 ├── docs/         # Architecture, data contract, and design notes
-├── evals/        # Offline metrics and benchmark scripts
+├── evals/        # Offline metrics, benchmark scripts, and smoke checks
 ├── landing/      # Portfolio landing page
 └── README.md
 ```
+
+## Local Smoke Test
+
+The current runnable slice is a deterministic profile-job recommender. It does
+not require external services or API keys:
+
+```sh
+python3 evals/smoke_recommendations.py
+```
+
+The script prints ranked jobs, matched skills, missing skills, and short reasons
+for each score. It is intentionally small so later FAISS, LightGBM, and LLM
+layers can be compared against a stable baseline.
 
 ## MVP Roadmap
 
